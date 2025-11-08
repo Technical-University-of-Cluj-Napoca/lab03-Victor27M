@@ -21,7 +21,7 @@ class Spot:
         self.height: int = height
         self.x: int = row * width
         self.y: int = col * height
-        self.color: tuple = COLORS["WHITE"]  # default color is white
+        self.color: tuple = (120, 120, 120)  # default background grey
         self.neighbors: list = []
         self.total_rows: int = total_rows
 
@@ -36,27 +36,27 @@ class Spot:
 
     def is_closed(self) -> bool:
         """
-        Checks if the spot is marked as closed (red) i.e. "Have we already looked at you?".
+        Checks if the spot is marked as closed (blue).
         Returns:
-            bool: True if the spot is closed (red), False otherwise.
+            bool: True if the spot is closed (blue), False otherwise.
         """
-        return self.color == COLORS['RED']
+        return self.color == (0, 102, 204)
 
     def is_open(self) -> bool:
         """
-        Checks if the spot is marked as open (green), i.e. "Are you free to pass?".
+        Checks if the spot is marked as open (cyan).
         Returns:
-            bool: True if the spot is marked as open (green), False otherwise.
+            bool: True if the spot is marked as open (cyan), False otherwise.
         """
-        return self.color == COLORS['GREEN']
+        return self.color == (0, 255, 255)
 
     def is_barrier(self) -> bool:
         """
-        Checks if the spot is marked as a barrier (black) i.e. "You cannot go through me!".
+        Checks if the spot is marked as a barrier (dark grey).
         Returns:
-            bool: True if the spot is a barrier (black), False otherwise.
+            bool: True if the spot is a barrier (dark grey), False otherwise.
         """
-        return self.color == COLORS['BLACK']
+        return self.color == (50, 50, 50)
 
     def is_start(self) -> bool:
         """
@@ -64,48 +64,48 @@ class Spot:
         Returns:
             bool: True if the spot is the start node (orange), False otherwise.
         """
-        return self.color == COLORS['ORANGE']
+        return self.color == (255, 165, 0)
 
     def is_end(self) -> bool:
         """
-        Checks if the spot is marked as the end node (turquoise).
+        Checks if the spot is marked as the end node (red).
         Returns:
-            bool: True if the spot is the end node (turquoise), False otherwise.
+            bool: True if the spot is the end node (red), False otherwise.
         """
-        return self.color == COLORS['TURQUOISE']
+        return self.color == (255, 0, 0)
 
     # ---- Methods to change the state of the spot (i.e., its setters) ----
     def reset(self) -> None:
         """
-        Change the color of the spot back to white (unvisited).
+        Change the color of the spot back to grey (unvisited).
         Returns:
             None
         """
-        self.color = COLORS['WHITE']
+        self.color = (120, 120, 120)
 
     def make_closed(self) -> None:
         """
-        Mark the spot as closed (red).
+        Mark the spot as closed (blue).
         Returns:
             None
         """
-        self.color = COLORS['RED']
+        self.color = (0, 102, 204)
 
     def make_open(self) -> None:
         """
-        Mark the spot as open (green).
+        Mark the spot as open (cyan).
         Returns:
             None
         """
-        self.color = COLORS['GREEN']
+        self.color = (0, 255, 255)
 
     def make_barrier(self) -> None:
         """
-        Mark the spot as a barrier (black).
+        Mark the spot as a barrier (dark grey).
         Returns:
             None
         """
-        self.color = COLORS['BLACK']
+        self.color = (50, 50, 50)
 
     def make_start(self) -> None:
         """
@@ -113,27 +113,25 @@ class Spot:
         Returns:
             None
         """
-        self.color = COLORS['ORANGE']
+        self.color = (255, 165, 0)
 
     def make_end(self) -> None:
         """
-        Mark the spot as the end node (yellow).
+        Mark the spot as the end node (red).
         Returns:
             None
         """
-        self.color = COLORS['YELLOW']
+        self.color = (255, 0, 0)
 
     def make_path(self) -> None:
         """
-        Mark the spot as part of the path (purple).
+        Mark the spot as part of the path (yellow).
         Returns:
             None
         """
-        self.color = COLORS['PURPLE']
+        self.color = (255, 255, 0)
 
     # --- Operators ---
-    # "Spot" type is not yet defined because the class will be defined at runtime and will exist only after it is closed (the whole class).
-    # So we use quotes to tell the type checker that this is a string, containing the name of a type that will exist later.
     def __lt__(self, other: "Spot") -> bool:
         """
         Less-than operator for comparing two spots. The other spot is always "greater" than this one.
@@ -148,7 +146,6 @@ class Spot:
         Args:
             win (pygame.Surface): The Pygame surface (window) where the spot will be drawn.
         """
-        # draw a rectangle at (x, y) with size (width, width) and color self.color
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
 
     def update_neighbors(self, grid: list[list["Spot"]]) -> None:
